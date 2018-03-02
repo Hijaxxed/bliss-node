@@ -16,7 +16,7 @@ html(lang='en')
           .col-lg-12.col-sm-12
             .header-banner
               a(href="/").logo
-              h1 Bliss Dev
+              h1 #{title}
         //end row
 
         .row
@@ -27,19 +27,23 @@ html(lang='en')
                   a(href='/') Home
               li
                   a(href='/ph') Placeholder
+              li
+                  a(href='/') Contact  
+              li
+                  a(href='/about') About                                 
         // end row
+
+
+    div.content
+      block content
 
 script.
   window.onscroll = function() {myFunction()};
   var header = document.getElementById("topnav");
-  //- var sticky = header.offsetTop;
   function myFunction() {
-  if (window.pageYOffset >= 330) {
+  if (window.pageYOffset >= 270) {
   header.classList.add("sticky");
   } else {
   header.classList.remove("sticky");
   }
   }
-
-div.content
-  block content
