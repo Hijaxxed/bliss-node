@@ -71,6 +71,16 @@ h1 {
   margin-left:3%;
   margin-top:2%;
 }
+.icard {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 50;
+}
+/* MISC */
 
 .sticky {
   position: fixed;

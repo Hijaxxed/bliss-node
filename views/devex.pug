@@ -3,5 +3,37 @@ extends layout
 block content
 
     .row
-        .col-lg-12.col-sm-12
+        .col-lg-12.col-sm-12.text-center
             h2 Are you sure you're allowed here?
+            br
+    //end row
+
+    .row
+        .col-lg-12.col-sm-12
+            .card-group
+                .card.text-center.icard
+                    .card-block
+                        img.card-img-top(src='https://image.flaticon.com/icons/svg/25/25231.svg', height='80', width='80', alt='Github icon')
+                    .card-block
+                        h4.card-title Github
+                        p.card-text
+                        | Here is a link to my Github
+                    .card-block
+                        a.card-link(href='https://github.com/Hijaxxed') Hijaxxed
+
+
+                .card.text-center.icard
+                    img.card-img-top(src='...', alt='Card image cap')
+                    .card-block
+                        h4.card-title Card title
+                        p.card-text
+                        | Some quick example text to build on the card title and make up the bulk of the card's content.
+                    ul.list-group.list-group-flush
+                        li.list-group-item Cras justo odio
+                        li.list-group-item Dapibus ac facilisis in
+                        li.list-group-item Vestibulum at eros
+                    .card-block
+                        a.card-link(href='#') Card link
+                        a.card-link(href='#') Another link
+
+    //end row
