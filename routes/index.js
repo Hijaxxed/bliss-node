@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-title = 'Dev Bliss';
+title = 'Lethargic Bliss';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
