@@ -5,3 +5,5 @@ This project is purely as a hobby, and also for educational purposes - to teach 
 
 This project is being developed with Node.js, Express.
 For aesthetics I am using the pug(Jade) template engine, and bootstrap.
+
+The site is currently being hosted on heroku.
