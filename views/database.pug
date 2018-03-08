@@ -1,0 +1,36 @@
+extends layout
+
+block content
+
+    .row
+        .col-lg-4.col-sm-4.offset-4
+
+            h2.text-center User Database
+            
+            table.dbtable
+                each user in users
+                    tr   
+                        td #{user.name}
+
+    .row
+        .col-lg-4.col-sm-12.offset-4
+
+            br
+            h2.text-center Add new person to the database
+            br
+
+            form.form(method='post' action='/form')
+                div
+                    | First name:
+                    br
+                    input(type='text', name='firstName')
+                    br
+                    |   Last name:
+                    br
+                    input(type='text', name='lastName')
+                    br
+                    br
+                    input(type='submit', value='Submit')
+
+
+    // end container

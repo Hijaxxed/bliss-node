@@ -35,6 +35,8 @@ html(lang='en')
               li
                   a(href='/about') About
               li#user                                                            
+                  a(href='/database') Database
+              li#user                                                            
                   a(href='/ex') Dev Center
 
         // end row
@@ -46,7 +48,7 @@ script.
   window.onscroll = function() {myFunction()};
   var header = document.getElementById("topnav");
   function myFunction() {
-  if (window.pageYOffset >= 150) {
+  if (window.pageYOffset >= 160) {
   header.classList.add("sticky");
   } else {
   header.classList.remove("sticky");
