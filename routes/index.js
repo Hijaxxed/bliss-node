@@ -3,12 +3,14 @@ var router = express.Router();
 
 title = 'Lethargic Bliss';
 
+
+
 /* Mongoose */
 
 var mongoose = require('mongoose');
 
 var User = require('./mongooseSchema/user');
-//mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds261088.mlab.com:61088/lethargic-bliss');
+
 
 
 mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function (err) {
@@ -75,35 +77,55 @@ router.get('/database', function(req,res,next){
 
   mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function(err, results){
     if (err) throw err;
-    var tableName = {};
-
     console.log('Database successfully connected');
 
     User.find( {} , function(err, result) {
-      
-
-      console.log('Sending result to render')
-
       res.render('database', {users: result});
-      
+
+      mongoose.disconnect()
+      console.log('MongoDB disconnected')
     }) // User.find
   }); //mongoose.connect
 }); //router.get
 
-//table#dbtable 8| > 9| each person in persons 10| tr#person_list_item 11| td #{person.firstName} 12| td #{person.lastName} Cannot read property 'length' of undefined
-
 router.post('/form', (req, res) => {
-  db.collection('test').save(req.body, (err, result) => {
+  mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function(err, results){
     if (err) return console.log(err)
 
     console.log(req.body)
-    console.log('saved to database')
+    
 
-    db.close()
+    mongoose.disconnect()
     res.redirect('/')
   })
 })
 
+router.post('/newUser', (req, res) => {
+  mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function(err, results){
+    if (err) return console.log(err)
+
+    console.log(req.body)
+    
+   var newUser = new User({
+    _id: new mongoose.Types.ObjectId(),
+    name: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName
+    },
+    description: '',
+  });
+
+  newUser.save(function(err) {
+      if (err) throw err;
+      
+      console.log('User successfully saved.');
+  });
+
+
+    mongoose.disconnect()
+    res.redirect('/')
+  })
+})
 
 
 

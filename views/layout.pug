@@ -44,13 +44,14 @@ html(lang='en')
     div.content
       block content
 
+
 script.
-  window.onscroll = function() {myFunction()};
   var header = document.getElementById("topnav");
-  function myFunction() {
+  window.onscroll = function(){
   if (window.pageYOffset >= 160) {
-  header.classList.add("sticky");
+   header.classList.add("sticky");
   } else {
   header.classList.remove("sticky");
   }
   }
+

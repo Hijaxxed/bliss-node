@@ -3,14 +3,24 @@ extends layout
 block content
 
     .row
-        .col-lg-4.col-sm-4.offset-4
+        .col-lg-12.col-sm-12
 
-            h2.text-center User Database
+            h1.title User Database
             
             table.dbtable
+                tr
+                    th ID
+                    th Last Name
+                    th First Name
+                    //- th Age 
+                    th Description
+
                 each user in users
                     tr   
-                        td #{user.name}
+                        td #{user._id}
+                        td #{user.name.lastName}
+                        td #{user.name.firstName}
+                        td #{user.description}
 
     .row
         .col-lg-4.col-sm-12.offset-4
@@ -19,7 +29,7 @@ block content
             h2.text-center Add new person to the database
             br
 
-            form.form(method='post' action='/form')
+            form.form(method='post' action='/newUser')
                 div
                     | First name:
                     br
