@@ -13,37 +13,37 @@ var User = require('./mongooseSchema/user');
 
 
 
-mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function (err) {
+// mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function (err) {
  
-   if (err) throw err;
+//    if (err) throw err;
  
-   console.log('Database intial connection successful');
+//    console.log('Database intial connection successful');
 
 
-  //  var peepUser = new User({
-  //   _id: new mongoose.Types.ObjectId(),
-  //   name: {
-  //       firstName: 'Lil',
-  //       lastName: 'God'
-  //   },
-  //   description: 'I am dead.',
-  // });
+//   //  var peepUser = new User({
+//   //   _id: new mongoose.Types.ObjectId(),
+//   //   name: {
+//   //       firstName: 'Lil',
+//   //       lastName: 'God'
+//   //   },
+//   //   description: 'I am dead.',
+//   // });
 
-  // peepUser.save(function(err) {
-  //     if (err) throw err;
+//   // peepUser.save(function(err) {
+//   //     if (err) throw err;
       
-  //     console.log('User successfully saved.');
-  // });
+//   //     console.log('User successfully saved.');
+//   // });
 
-//   User.findById('5aa1a8cdd3d2b63bdcbc607e', function(err, result) {
-//     if (err) throw err;
+// //   User.findById('5aa1a8cdd3d2b63bdcbc607e', function(err, result) {
+// //     if (err) throw err;
     
-//     console.log(result.name.firstName)
+// //     console.log(result.name.firstName)
 
+// // });
+
+//  mongoose.disconnect();
 // });
-
- mongoose.disconnect();
-});
 
 
 
@@ -112,7 +112,8 @@ router.post('/newUser', (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName
     },
-    description: '',
+    age: req.body.age,
+    description: req.body.description,
   });
 
   newUser.save(function(err) {
@@ -123,7 +124,7 @@ router.post('/newUser', (req, res) => {
 
 
     mongoose.disconnect()
-    res.redirect('/')
+    res.redirect('database')
   })
 })
 

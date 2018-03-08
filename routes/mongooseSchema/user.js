@@ -9,6 +9,7 @@ var userSchema = mongoose.Schema({
         },
         lastName: String
     },
+    age: Number,
     description: String,
     created: { 
         type: Date,

@@ -12,7 +12,7 @@ block content
                     th ID
                     th Last Name
                     th First Name
-                    //- th Age 
+                    th Age 
                     th Description
 
                 each user in users
@@ -20,6 +20,7 @@ block content
                         td #{user._id}
                         td #{user.name.lastName}
                         td #{user.name.firstName}
+                        td #{user.age}
                         td #{user.description}
 
     .row
@@ -38,6 +39,14 @@ block content
                     |   Last name:
                     br
                     input(type='text', name='lastName')
+                    br
+                    |   Age:
+                    br
+                    input(type='number', name='age')
+                    br
+                    |   Description:
+                    br
+                    input(type='text', name='description')
                     br
                     br
                     input(type='submit', value='Submit')
