@@ -42,19 +42,23 @@ router.get('/ex', function(req, res, next) {
 
 
 router.get('/database', function(req,res,next){
+  if(loggedInUser) {
 
-  mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function(err, results){
-    if (err) throw err;
-    console.log('Database successfully connected');
-
-    User.find( {} , function(err, result) {
-      loggedInUser = req.session.user;
-      res.render('database', {title, users: result, loggedInUser});
-
-      mongoose.disconnect()
-      console.log('MongoDB disconnected')
-    }) // User.find
-  }); //mongoose.connect
+    mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function(err, results){
+      if (err) throw err;
+      console.log('Database successfully connected');
+  
+      User.find( {} , function(err, result) {
+        loggedInUser = req.session.user;
+        res.render('database', {title, users: result, loggedInUser});
+  
+        mongoose.disconnect()
+        console.log('MongoDB disconnected')
+      }) // User.find
+    }); //mongoose.connect
+  }
+  else
+    res.redirect('/')
 }); //router.get
 
 
@@ -147,9 +151,13 @@ router.get('/signOut', function(req, res, next) {
 });
 
 router.get('/accountDetails', function(req, res, next) {
-  console.log(loggedInUser)
-  loggedInUser = req.session.user;
-  res.render('accountDetails', {title, loggedInUser})
+  if (loggedInUser) {
+    console.log(loggedInUser)
+    loggedInUser = req.session.user;
+    res.render('accountDetails', {title, loggedInUser})
+  }
+  else
+    res.redirect('/')
 });
 
 
