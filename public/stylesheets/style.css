@@ -77,7 +77,7 @@ h2 {
   font-weight: 400;
 }
 
-#user {
+#account {
   float: right;
 }
 
@@ -162,6 +162,28 @@ h2 {
   background-color: rgb(130, 132, 136);
 
 }
+
+/* -- */
+
+.accountDetails div {
+  border-radius: 5px;
+  background-color: rgb(58, 61, 66);
+  padding: 20px;
+  margin-bottom: 50px;
+}
+
+.accountDetails p {
+  color: white;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  background-color: rgb(92, 93, 95);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
 
 /* --- */
 

@@ -10,46 +10,17 @@ block content
             table.dbtable
                 tr
                     th ID
-                    th Last Name
-                    th First Name
+                    th Username
+                    th Email
                     th Age 
                     th Description
 
                 each user in users
                     tr   
                         td #{user._id}
-                        td #{user.name.lastName}
-                        td #{user.name.firstName}
+                        td #{user.userName}
+                        td #{user.email}
                         td #{user.age}
                         td #{user.description}
-
-    .row
-        .col-lg-4.col-sm-12.offset-4
-
-            br
-            h2.text-center Add new person to the database
-            br
-
-            form.form(method='post' action='/newUser')
-                div
-                    | First name:
-                    br
-                    input(type='text', name='firstName')
-                    br
-                    |   Last name:
-                    br
-                    input(type='text', name='lastName')
-                    br
-                    |   Age:
-                    br
-                    input(type='number', name='age')
-                    br
-                    |   Description:
-                    br
-                    input(type='text', name='description')
-                    br
-                    br
-                    input(type='submit', value='Submit')
-
 
     // end container

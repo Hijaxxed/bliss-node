@@ -1,0 +1,46 @@
+extends layout
+
+block content
+
+    .row
+        .col-lg-8.col-sm-12.offset-2
+
+            br
+            h2.text-center Account Details
+            br
+
+            div.accountDetails
+                div
+                    p   Username: #{loggedInUser.userName}
+                    br
+                    p   Email: #{loggedInUser.email}
+                    br
+                    p   Description: #{loggedInUser.description}
+                    br
+
+            
+    .row
+        .col-lg-4.col-sm-12.offset-4
+
+            br
+            h2.text-center Edit Account
+            br
+
+
+            //- form.form(method='post' action='/editAccount')
+            //-     div
+            //-         |   Username:
+            //-         br
+            //-         input(type='text', name='userName' value=loggedInUser.userName)
+            //-         br
+            //-         |   Email:
+            //-         br
+            //-         input(type='email', name='email' value=loggedInUser.email disabled)
+            //-         br
+            //-         |   Description:
+            //-         br
+            //-         //input#desc(type='text', name='description' value=loggedInUser.description)
+            //-         textarea#desc(rows=10, type='text', name='description' value=loggedInUser.description)
+            //-         br
+
+            //-         input(type='submit', value='Change')

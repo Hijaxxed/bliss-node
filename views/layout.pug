@@ -29,15 +29,27 @@ html(lang='en')
               li
                   a(href='/') Home
               li
-                  a(href='/ph') Placeholder
-              li
-                  a(href='/') Contact  
+                  a(href='/ph') Placeholder 
               li
                   a(href='/about') About
-              li#user                                                            
+
+
+              if loggedInUser
+
+                li#account
+                  a(href='/signOut') Sign Out
+                li#account
+                  a(href='/accountDetails') Account
+                li#account                                                            
                   a(href='/database') Database
-              li#user                                                            
-                  a(href='/ex') Dev Center
+
+              else
+                li#account
+                  a(href='/logIn') Log In
+                li#account
+                  a(href='/signUp') Register
+
+
 
         // end row
 

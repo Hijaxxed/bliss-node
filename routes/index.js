@@ -3,7 +3,7 @@ var router = express.Router();
 
 title = 'Lethargic Bliss';
 
-
+var loggedInUser = null;
 
 /* Mongoose */
 
@@ -13,59 +13,27 @@ var User = require('./mongooseSchema/user');
 
 
 
-// mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function (err) {
- 
-//    if (err) throw err;
- 
-//    console.log('Database intial connection successful');
-
-
-//   //  var peepUser = new User({
-//   //   _id: new mongoose.Types.ObjectId(),
-//   //   name: {
-//   //       firstName: 'Lil',
-//   //       lastName: 'God'
-//   //   },
-//   //   description: 'I am dead.',
-//   // });
-
-//   // peepUser.save(function(err) {
-//   //     if (err) throw err;
-      
-//   //     console.log('User successfully saved.');
-//   // });
-
-// //   User.findById('5aa1a8cdd3d2b63bdcbc607e', function(err, result) {
-// //     if (err) throw err;
-    
-// //     console.log(result.name.firstName)
-
-// // });
-
-//  mongoose.disconnect();
-// });
-
-
-
-
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', {title});
+  loggedInUser = req.session.user;
+  res.render('index', {title, loggedInUser});
 });
 
 router.get('/ph', function(req, res, next) {
-  res.render('ph', { title});
+  loggedInUser = req.session.user;
+  res.render('ph', { title, loggedInUser});
 });
 
 router.get('/about', function(req, res, next) {
-  res.render('about', {title});
+  loggedInUser = req.session.user;
+  res.render('about', {title, loggedInUser});
 });
 
 
 router.get('/ex', function(req, res, next) {
-  res.render('devex', {title});
+  loggedInUser = req.session.user;
+  res.render('devex', {title, loggedInUser});
 });
 
 
@@ -80,7 +48,8 @@ router.get('/database', function(req,res,next){
     console.log('Database successfully connected');
 
     User.find( {} , function(err, result) {
-      res.render('database', {users: result});
+      loggedInUser = req.session.user;
+      res.render('database', {title, users: result, loggedInUser});
 
       mongoose.disconnect()
       console.log('MongoDB disconnected')
@@ -88,17 +57,12 @@ router.get('/database', function(req,res,next){
   }); //mongoose.connect
 }); //router.get
 
-router.post('/form', (req, res) => {
-  mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function(err, results){
-    if (err) return console.log(err)
 
-    console.log(req.body)
-    
+router.get('/signUp', function(req, res, next) {
+  loggedInUser = req.session.user;
+  res.render('signUp', {title, loggedInUser})
 
-    mongoose.disconnect()
-    res.redirect('/')
-  })
-})
+});
 
 router.post('/newUser', (req, res) => {
   mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function(err, results){
@@ -108,27 +72,85 @@ router.post('/newUser', (req, res) => {
     
    var newUser = new User({
     _id: new mongoose.Types.ObjectId(),
-    name: {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName
-    },
+    email: req.body.email,
+    userName: req.body.userName,
+    password: req.body.password,
     age: req.body.age,
-    description: req.body.description,
+    description: req.body.description
   });
 
   newUser.save(function(err) {
       if (err) throw err;
       
-      console.log('User successfully saved.');
+      console.log('New user successfully saved.');
   });
-
-
     mongoose.disconnect()
+    console.log('MongoDB disconnected')
     res.redirect('database')
   })
 })
 
+router.get('/login', function(req, res, next) {
+  loggedInUser = req.session.user;
+  res.render('login', {title, loggedInUser})
+});
 
+router.post('/logInUser', function(req, res, next) {
+  var exists = false;
+  if (req.body.email === '' || req.body.password === '' ){
+    res.redirect('/logIn')
+  } else { 
+    mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function(err){
+      User.find( {} , function(err, results, fields){   
+          //connection.query(`SELECT email FROM Users WHERE email='${req.body.email}'`, function(err, results, fields){
+
+          //console.log(results);  
+          var userThere = true;  
+          if(err)
+            throw err;
+    
+          for(var i = 0; i < results.length; i++){
+            if(req.body.email === results[i].email){
+              if(req.body.password === results[i].password){
+
+                  req.session.user = {
+                  email : req.body.email, userName : results[i].userName, description : results[i].description
+                };
+                console.log(req.session.user)
+                console.log('User: ' + req.session.user + 'signed in')
+
+                return res.redirect('/');
+              } else{
+                return res.redirect('/login');
+              }
+            }
+              else{
+                userThere = false;
+                
+              }
+          
+          }
+          if(!userThere)
+            console.log('User not found')
+            return res.redirect('/login'); 
+        }); // end conncetion.query
+        mongoose.disconnect()
+        console.log('MongoDB disconnected')
+      }); // end connection.connect
+    } // end else
+}); //end router.post
+
+router.get('/signOut', function(req, res, next) {
+  req.session.user = null;
+  console.log(req.session.user + 'logged out')
+  res.redirect('/');
+});
+
+router.get('/accountDetails', function(req, res, next) {
+  console.log(loggedInUser)
+  loggedInUser = req.session.user;
+  res.render('accountDetails', {title, loggedInUser})
+});
 
 
 module.exports = router;

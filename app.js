@@ -5,8 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+const cookieSession = require('cookie-session');
+
 var index = require('./routes/index');
 var users = require('./routes/users');
+var session = require('./routes/session');
 
 var app = express();
 
@@ -22,8 +25,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.set('trust proxy', 1);
+app.use(cookieSession(
+    {
+        name: 'session',
+        secret : 'bqn6tKshFseLowe0-sV1pcCW',
+        httpOnly : true,
+        maxAge : 30 * 60 * 1000,
+        secure : false,
+        overwrite : false
+    }
+));
+
 app.use('/', index);
 app.use('/users', users);
+app.use('/session', session);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
