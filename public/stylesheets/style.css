@@ -201,6 +201,8 @@ h2 {
 .title {
   text-align: center;
   font-family: 'Karma';
+  padding-top: .6%;
+  padding-bottom: .2%;
 }
 /* MISC */
 
