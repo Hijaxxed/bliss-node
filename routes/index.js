@@ -5,6 +5,10 @@ title = 'Lethargic Bliss';
 
 var loggedInUser = null;
 
+/*web scraper*/
+var request = require('request'); 
+var cheerio = require('cheerio');
+
 /* Mongoose */
 
 var mongoose = require('mongoose');
@@ -17,12 +21,30 @@ var User = require('./mongooseSchema/user');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   loggedInUser = req.session.user;
+
+  var scrapedData = "";
+
+  // scrape(scrapedData, function( val ) {
+  //   scrapedData = val;
+  //   //console.log(scrapedData);
+
+  //   imgURL = scrapedData.img;
+
+  //   //render in function to access scraped data
+  //   res.render('index', {title, loggedInUser, scrapedData, imgURL});
+  // });
+
   res.render('index', {title, loggedInUser});
 });
 
 router.get('/ph', function(req, res, next) {
   loggedInUser = req.session.user;
   res.render('ph', { title, loggedInUser});
+});
+
+router.get('/blog', function(req, res, next) {
+  loggedInUser = req.session.user;
+  res.render('blogList', { title, loggedInUser});
 });
 
 router.get('/about', function(req, res, next) {
@@ -37,8 +59,28 @@ router.get('/ex', function(req, res, next) {
 });
 
 
+/*web scraper*/
+function scrape(out, callback){
+  //target
+  url = 'https://c.xkcd.com/random/comic/';
 
+  request(url, out, function(error, response, html){
 
+    if(!error){
+        var $ = cheerio.load(html);
+
+        var title = $("#ctitle").text();
+        var src = $("#comic img").attr("src");
+
+        var out = {
+          title: title,
+          img: src
+        };
+        //console.log(out);
+        return callback(out);
+    }
+  })
+};
 
 
 router.get('/database', function(req,res,next){
@@ -102,7 +144,7 @@ router.get('/login', function(req, res, next) {
 router.post('/logInUser', function(req, res, next) {
   var exists = false;
   if (req.body.email === '' || req.body.password === '' ){
-    res.redirect('/logIn')
+    res.redirect('/login')
   } else { 
     mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function(err){
       User.find( {} , function(err, results, fields){   
