@@ -175,7 +175,7 @@ hr {
 
 .dbtable th {
   border-bottom: 1px solid white;
-  background-color: #333;
+  background-color: rgb(27, 27, 27);
   color: white;
   height: 60px;
   font-family: Tahoma;
@@ -188,7 +188,7 @@ hr {
   height: 50px;
   padding: 5px;
   text-align: center;
-  background-color: rgb(130, 132, 136);
+  background-color: rgb(53, 52, 52);
 
 }
 
@@ -222,7 +222,8 @@ hr {
   margin: 0 auto;
   text-align: center;
   background-color: rgb(27, 27, 27);
-  border-radius: 6px;
+  border: 2px solid rgb(8, 8, 8);
+  border-radius: 8px;
   padding: 16px 18px;
 }
 

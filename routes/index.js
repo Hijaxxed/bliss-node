@@ -53,10 +53,15 @@ router.get('/about', function(req, res, next) {
 });
 
 
-router.get('/ex', function(req, res, next) {
-  loggedInUser = req.session.user;
-  res.render('devex', {title, loggedInUser});
+router.get('/hub', function(req, res, next) {
+  if(loggedInUser) {
+    loggedInUser = req.session.user;
+    res.render('hub', {title, loggedInUser});
+  }
+  else
+    res.redirect('/')
 });
+  
 
 
 /*web scraper*/
