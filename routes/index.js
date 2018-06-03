@@ -24,17 +24,17 @@ router.get('/', function(req, res, next) {
 
   var scrapedData = "";
 
-  // scrape(scrapedData, function( val ) {
-  //   scrapedData = val;
-  //   //console.log(scrapedData);
+  scrape(scrapedData, function( val ) {
+    scrapedData = val;
+    //console.log(scrapedData);
 
-  //   imgURL = scrapedData.img;
+    imgURL = scrapedData.img;
 
-  //   //render in function to access scraped data
-  //   res.render('index', {title, loggedInUser, scrapedData, imgURL});
-  // });
+    //render in function to access scraped data
+    res.render('index', {title, loggedInUser, scrapedData, imgURL});
+  });
 
-  res.render('index', {title, loggedInUser});
+  //res.render('index', {title, loggedInUser});
 });
 
 router.get('/ph', function(req, res, next) {

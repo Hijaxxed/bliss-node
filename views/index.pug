@@ -20,15 +20,14 @@ block content
   br
 
   .row 
-    .col-lg-6.col-sm-6.text-center
-      div.icard
+    .col-lg-8.offset-2.col-sm-12
+      div.icard#xkcd
         h3 Daily Dose of XKCD
+        hr
+        h4 #{scrapedData.title}
+        img(src= 'http://' + imgURL)
         br
-        //h4 #{scrapedData.title}
-
-
-        p NOT WORKING
-        //img(:src= "http://#{imgURL}")
+        
         
       
 

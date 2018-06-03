@@ -212,7 +212,10 @@ hr {
   box-sizing: border-box;
 }
 
-
+#xkcd img{
+  border: 2px solid white;
+  margin-bottom: 3%;
+}
 
 /* --- */
 
