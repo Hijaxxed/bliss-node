@@ -16,8 +16,14 @@ var userSchema = mongoose.Schema({
     created: { 
         type: Date,
         default: Date.now
+    },
+    admin: {
+        type: Boolean,
+        default: false,
+        required: true
     }
 });
+
 
 var User = mongoose.model('User', userSchema, 'users');
  

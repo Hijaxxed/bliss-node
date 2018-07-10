@@ -21,20 +21,7 @@ var User = require('./mongooseSchema/user');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   loggedInUser = req.session.user;
-
-  var scrapedData = "";
-
-  scrape(scrapedData, function( val ) {
-    scrapedData = val;
-    //console.log(scrapedData);
-
-    imgURL = scrapedData.img;
-
-    //render in function to access scraped data
-    res.render('index', {title, loggedInUser, scrapedData, imgURL});
-  });
-
-  //res.render('index', {title, loggedInUser});
+  res.render('index', { title, loggedInUser});
 });
 
 router.get('/ph', function(req, res, next) {
@@ -44,14 +31,22 @@ router.get('/ph', function(req, res, next) {
 
 router.get('/blog', function(req, res, next) {
   loggedInUser = req.session.user;
-  res.render('blogList', { title, loggedInUser});
+
+  var scrapedData = "";
+
+  scrape(scrapedData, function( val ) {
+    scrapedData = val;
+    //console.log(scrapedData);
+    imgURL = scrapedData.img;
+    //render in function to access scraped data
+    res.render('blogList', {title, loggedInUser, scrapedData, imgURL});
+  });
 });
 
 router.get('/about', function(req, res, next) {
   loggedInUser = req.session.user;
   res.render('about', {title, loggedInUser});
 });
-
 
 router.get('/hub', function(req, res, next) {
   if(loggedInUser) {
@@ -62,7 +57,18 @@ router.get('/hub', function(req, res, next) {
     res.redirect('/')
 });
   
-
+router.get('/admin', function(req, res, next) {
+  if(loggedInUser) {
+    loggedInUser = req.session.user;
+    if(loggedInUser.admin){
+      res.render('admin', {title, loggedInUser});
+    }
+    else
+      res.redirect('/');
+  }
+  else
+    res.redirect('/');
+});
 
 /*web scraper*/
 function scrape(out, callback){
@@ -109,37 +115,7 @@ router.get('/database', function(req,res,next){
 }); //router.get
 
 
-router.get('/signUp', function(req, res, next) {
-  loggedInUser = req.session.user;
-  res.render('signUp', {title, loggedInUser})
 
-});
-
-router.post('/newUser', (req, res) => {
-  mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function(err, results){
-    if (err) return console.log(err)
-
-    console.log(req.body)
-    
-   var newUser = new User({
-    _id: new mongoose.Types.ObjectId(),
-    email: req.body.email,
-    userName: req.body.userName,
-    password: req.body.password,
-    age: req.body.age,
-    description: req.body.description
-  });
-
-  newUser.save(function(err) {
-      if (err) throw err;
-      
-      console.log('New user successfully saved.');
-  });
-    mongoose.disconnect()
-    console.log('MongoDB disconnected')
-    res.redirect('database')
-  })
-})
 
 router.get('/login', function(req, res, next) {
   loggedInUser = req.session.user;
@@ -165,10 +141,10 @@ router.post('/logInUser', function(req, res, next) {
               if(req.body.password === results[i].password){
 
                   req.session.user = {
-                  email : req.body.email, userName : results[i].userName, description : results[i].description
+                  email : req.body.email, userName : results[i].userName, description : results[i].description, admin : results[i].admin
                 };
-                console.log(req.session.user)
-                console.log('User: ' + req.session.user + 'signed in')
+                //console.log(req.session.user)
+                console.log('User: ' + req.session.user.userName + ' signed in')
 
                 return res.redirect('/');
               } else{
@@ -207,5 +183,44 @@ router.get('/accountDetails', function(req, res, next) {
     res.redirect('/')
 });
 
+router.get('/signUp', function(req, res, next) {
+  loggedInUser = req.session.user;
+  res.render('signUp', {title, loggedInUser})
+
+});
+
+router.post('/newUser', (req, res) => {
+  mongoose.connect('mongodb://hijaxxed:Roga3272@ds261088.mlab.com:61088/lethargic-bliss', function(err, results){
+
+    if (err) return console.log(err)
+
+    
+    var newUser = new User({
+      _id: new mongoose.Types.ObjectId(),
+      email: req.body.email,
+      userName: req.body.userName,
+      password: req.body.password,
+      age: req.body.age,
+      description: req.body.description
+      
+    });
+    
+    console.log(newUser)
+
+    newUser.save(function(err) {
+      if (err) throw err;
+        
+      console.log('New user successfully saved.');
+
+      mongoose.disconnect()
+      console.log('MongoDB disconnected')
+      res.redirect('database')
+    });
+
+    // mongoose.disconnect()
+    // console.log('MongoDB disconnected')
+    // res.redirect('database')
+  })
+});
 
 module.exports = router;

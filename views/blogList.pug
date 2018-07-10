@@ -2,11 +2,26 @@ extends layout
 
 block content
 
-    h1.title My Blog
-    hr
+    .row
+        .col-lg-12.col-sm-12
+            br
+            h3 Coming soon!
+            br
+            b5 Maybe?
+    //end row
 
-    .section
-        br
-        h3 Coming soon!
-        br
-        h5 Maybe?
+    br
+    hr
+    br
+
+    .row
+    
+        .col-lg-8.offset-2.col-sm-12
+            div.icard#xkcd
+                h3 Daily Dose of XKCD
+                hr
+                h4 #{scrapedData.title}
+                img(src= 'http://' + imgURL)
+                br
+        
+    //end row

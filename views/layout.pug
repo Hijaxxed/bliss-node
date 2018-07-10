@@ -39,22 +39,27 @@ html(lang='en')
                   a(href='/about') About
 
 
-              if loggedInUser
-
+              if loggedInUser             
                 li#account
                   a(href='/signOut') Sign Out
                 li#account
                   a(href='/accountDetails') Account
-                li#account                                                            
-                  a(href='/database') Admin
                 li#account
                   a(href='/hub') Hub
-
               else
                 li#account
                   a(href='/login') Log In
                 li#account
                   a(href='/signUp') Register
+
+              if loggedInUser
+                if loggedInUser.admin
+                  li#account                                                          
+                    a(href='/admin') Admin
+              else 
+                console.log('Admin privalages not granted')
+
+
 
 
 
